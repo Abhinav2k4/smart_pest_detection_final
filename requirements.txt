@@ -1,4 +1,5 @@
-flask
-pillow
-numpy
+Flask
 tensorflow
+numpy
+Pillow
+opencv-python-headless
