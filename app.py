@@ -7,7 +7,7 @@ import tensorflow as tf
 
 
 app = Flask(__name__)
-interpreter = tf.lite.Interpreter(model_path="pest_model.tflite")
+interpreter = tf.lite.Interpreter(model_path="smart_pest_model.tflite")
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
