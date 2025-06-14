@@ -28,10 +28,14 @@ def preprocess_image(image):
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file uploaded'}), 400
+    try:
+        if 'file' in request.files:
+            img = Image.open(io.BytesIO(request.files['file'].read()))
+        else:
+            img = Image.open(io.BytesIO(request.data))
+    except Exception as e:
+        return jsonify({'error': f'Failed to read image: {str(e)}'}), 400
 
-    img = Image.open(io.BytesIO(request.files['file'].read()))
     input_data = preprocess_image(img)
 
     interpreter.set_tensor(input_details[0]['index'], input_data)
