@@ -5,7 +5,6 @@ import io
 import os
 import tensorflow as tf
 
-
 app = Flask(__name__)
 interpreter = tf.lite.Interpreter(model_path="smart_pest_model.tflite")
 interpreter.allocate_tensors()
@@ -42,10 +41,13 @@ def predict():
     class_id = int(np.argmax(output_data))
     pest = classes[class_id]
 
-    return jsonify({
+    response = {
         "pest": pest,
         "solution": solutions[pest]
-    })
+    }
+
+    print("Sending JSON:", response)
+    return jsonify(response), 200
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
